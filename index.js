@@ -1,17 +1,25 @@
 const express = require('express');
 const post = 3001;
 const app = express();
-// const 
 const connectToMongoDB = require('./connect_db.js');
+const authRouter = require('./routes/auth.js');
+// const 
 
+
+//Middlewares
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+
+//ConnectDB
 connectToMongoDB();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
 //Routes
-// app.use('/api/auth', );
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
+
+// Routes
+app.use('/api/auth', authRouter);
 
 app.listen(post, () => {
     console.log(`Example app listening on port ${post}!`);
