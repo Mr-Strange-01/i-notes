@@ -3,6 +3,7 @@ const post = 3001;
 const app = express();
 const connectToMongoDB = require('./connect_db.js');
 const authRouter = require('./routes/auth.js');
+const bodyParser = require('body-parser');
 // const 
 
 
