@@ -37,7 +37,6 @@ const register = async function (req, res) {
         res.status(500).send(error);
     }
 }
-
 const login = async function (req, res) {
     var body = req.body;
     var user = await User.findOne({ email: body.email });
@@ -64,8 +63,6 @@ const login = async function (req, res) {
        res.status(500).send(error);
    }
 }
-
-
 const fetchUser = async function (req, res) {
     try {
         const user = await User.findById(req.user.id).select('-password');
