@@ -5,14 +5,16 @@ const connectToMongoDB = require('./connect_db.js');
 const authRouter = require('./routes/auth.js');
 const noteRouter = require('./routes/notes.js');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 // const 
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Hello World!');
+// });
 
 
 //Middlewares
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 

@@ -46,7 +46,7 @@ const updateNote = async function (req, res) {
         const updateData = {};
 
         if(title) updateData.title = title;
-        if(description) udpateData.description = description;
+        if(description) updateData.description = description;
         if(tag) updateData.tag = tag;
 
         const update = await Note.findByIdAndUpdate(req.params.id, {$set: updateData}, {new: true});
@@ -59,7 +59,7 @@ const updateNote = async function (req, res) {
 
 const deleteNote = async function (req, res) {
     try {
-        const note = Note.findById(req.params.id);
+        const note = await Note.findById(req.params.id);
         if(!note)
         {
             return res.status(404).send('Not Found');
@@ -69,8 +69,9 @@ const deleteNote = async function (req, res) {
         {
             return res.status(401).send('Not Allowed');
         }
-
+        
         const deleteNote = await Note.findByIdAndDelete(req.params.id);
+        console.log(deleteNote);
 
         res.status(200).send(deleteNote);
     } catch (error) {
