@@ -30,11 +30,10 @@ const register = async function (req, res) {
 
         const data = { id: user._id };
         const authToken = jwt.sign(data, JWT_SECRET);
-        console.log(authToken);
         
-        res.status(201).send({authToken});
+        res.status(201).send({success: true, message: 'User registered successfully', authToken});
     } catch (error) {
-        res.status(500).send(error);
+        res.status(500).send({success: false, message: 'User registration failed', error});
     }
 }
 const login = async function (req, res) {
@@ -46,16 +45,19 @@ const login = async function (req, res) {
         if (!user) {
             res.status(404).send('Please login with correct credentials');
         } else {
-            if (bcrypt.compare(body.password, user.password)) {
+            // res.send(user);
+            const isMatch = await bcrypt.compare(body.password, user.password);
+            if(isMatch){
                 const payload = {
                     user: {
                         id: user._id,
                     }
                 }
                 const authToken = jwt.sign(payload, JWT_SECRET);
-                res.status(200).send({authToken});
-            } else {            
-                res.status(401).send('Invalid password');
+                res.status(200).send({success: true, message: 'User logged in successfully', authToken});
+            }
+            else {            
+                res.status(401).send({success: false, message:'Invalid password'});
             }
         }
    }
